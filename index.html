@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Türkçe Wordle Oyna TR</title>
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=900", user-scalable = "no" />    
+</head>
+
+<body>
+
+    <div class="game-container">
+        <div class="title-container">
+            <h1>WORDLE TR</h1>  
+            <p>Sınırsız Türkçe Wordle Oyna</p> 
+            
+            <h2 id="dark"><button onclick="darkMode()" class="bi bi-moon-stars-fill"></button></h2>
+            <h2 id="info"><button onclick="infoPopup()" class="bi bi-info-square-fill"></button></h2>
+        </div>
+        <div class="message-container"></div>
+        <div class="tile-container"></div>
+        <div class="key-container"></div>
+        <div class="container" id="endContainer"><i onclick="closePopup()" id="close" class="bi bi-x-circle-fill"></i>
+
+            <a href="" target="_blank" id=resultLogo></a>
+            <p id=results>
+            </p>
+        </div>
+    </div>
+    <footer class="footer"> Türkçe Wordle Oyunu Klonu 2022 &copy; 
+        <a target="_blank" href="https://ararim.anasayfa.link/ara">ararım</a>        
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
