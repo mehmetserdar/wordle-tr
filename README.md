@@ -7,7 +7,7 @@ gettting words. My app doesn't use any of them.
 It creates random number from array's length and pick random word from array.
 User has 6 tries to find the right answer.
 
-[WORDLE TÜRKÇE OYNA](https://wordle-tr.netlify.app/)
+[WORDLE TÜRKÇE OYNA](https://wordletr.anasayfa.link/)
 
 ### MIT Licence
 
