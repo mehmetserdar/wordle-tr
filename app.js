@@ -242,7 +242,7 @@ const darkMode = () => {
 
 const infoPopup = () => {
     document.getElementById('results').textContent = 
-    "NASIL OYNANIR"+
+    "NASIL OYNANIR?"+
     "\n"+
     "\n"+
     "\nWORDLE'i 6 denemede bulun." +
