@@ -11074,15 +11074,6 @@ const checkwords = [
 ];
 
 let random_number = Math.floor(Math.random() * dict.length);
-// var now = new Date();
-// var start = new Date(now.getFullYear(), 0, 0);
-// var diff = now - start;
-// var oneDay = 1000 * 60 * 60 * 24;
-// var day = Math.floor(diff / oneDay);
-// let artist = upArtist[day - 63]
-// let wordle = upWordle[day - 63]
-// This gives random song for each day. It is minus 63 because
-// today was 63th day of the year. And it starts from 0 in the array.
 let wordle = dict[random_number];
 const keys = [
   "E",
@@ -11318,7 +11309,7 @@ const infoPopup = () => {
   document.getElementById("infoo").textContent =
     "NASIL OYNANIR?" +
     "\n" +
-    "\nWORDLE'i 6 denemede bulun." +
+    "\nPENTAHARF'i 6 denemede bulun." +
     "\n" +
     "\nHer tahmin 5 harfli bir kelime olmalıdır. Göndermek için enter'a basın." +
     "\n" +
@@ -11364,7 +11355,7 @@ const showUserStatistics = () => {
     }, {});
 
     const attemptsTextList = Object.entries(attemptsCountMap).map(([attempts, count]) => {
-        return `${count} kez ${attempts}. tahminde bildin.\n`;
+        return `${count} kez ${attempts}. tahminde buldun.\n`;
     });
 
     const gameDiv = document.createElement('div');

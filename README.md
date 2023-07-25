@@ -1,4 +1,4 @@
-# wordle-tr-javascript ( turkish wordle clone )
+# wordle-tr-javascript ( PENTAHARF turkish wordle clone )
 A Game of Wordle with Turkish words
 Forked project.
 I made few changes on it. 
@@ -7,7 +7,7 @@ gettting words. My app doesn't use any of them.
 It creates random number from array's length and pick random word from array.
 User has 6 tries to find the right answer.
 
-[WORDLE TÜRKÇE OYNA](https://turkcewordle.netlify.app/)
+[PENTAHARF | TÜRKÇE WORDLE OYNA](https://pentaharf.netlify.app/)
 
 ### MIT Licence
 
