@@ -47,6 +47,14 @@ a{
   
   
 }
+
+#stat{
+    color: #3a3a3c;
+    position: absolute;
+    top: 0.5vh;
+    right: 8.5vh;}
+  
+  
 .hidden{
     display: none;
 }
