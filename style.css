@@ -35,7 +35,7 @@ a{
     position: absolute;
     width:48px;
     height: 48px;
-    top: 0.1vh;
+    top: 1.1vh;
     right: 0.5vh;
   
   
@@ -46,7 +46,7 @@ a{
     position: absolute;
     width:48px;
     height: 48px;
-    top: 0.1vh;
+    top: 1.1vh;
     right: 5.5vh;
   
   
@@ -54,11 +54,8 @@ a{
 
 .piggy{
     color: #3a3a3c;
-    position: absolute;
-    
+    position: absolute;    
     top: 0.2vh;
-    left: 5.5vh;
-  
   
 }
 
@@ -442,7 +439,12 @@ a:hover {
 }
 
 
+#userCoinDisplay{
+    position: fixed;
+    top: 3vh;
+    left: 5.5vh; /* Adjust the right position as needed */
 
+}
 
 
 
