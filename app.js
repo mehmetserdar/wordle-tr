@@ -11076,7 +11076,7 @@ const darkDisplay = document.querySelector("#dark");
 // Function to fetch the daily number from the website
 // Fetch the daily number from the given URL
 
-const apiUrl = 'http://test.biri.link/api/daily-number'; // Use the relative URL since the server is running on the same domain
+const apiUrl = 'https://test.biri.link/api/daily-number'; // Use the relative URL since the server is running on the same domain
 
 const fetchDailyNumber = async () => {
   try {
