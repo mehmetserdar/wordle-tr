@@ -11099,17 +11099,16 @@ const fetchDailyNumber = async () => {
 fetchDailyNumber().then(() => {
   dailyWord = dict[dailyNumber];
 });
-let isDailyMode = JSON.parse(localStorage.getItem("PNTisDailyMode")) || null;
-
+let isDailyMode;
 let random_number = Math.floor(Math.random() * dict.length);
 let wordle = dict[random_number];
+console.log(localStorage.getItem("PNTisDailyMode") === null)
 if (localStorage.getItem("PNTisDailyMode") === null) {
   isDailyMode = true; // Set isDailyMode to true when the button is clicked
   // Save the updated isDailyMode to local storage
   localStorage.setItem("PNTisDailyMode", JSON.stringify(isDailyMode));
 }
 let dailyGameCounter = JSON.parse(localStorage.getItem("PNTdailyGameCounter")) || 0;
-let lastPlayedDate = localStorage.getItem('PNTlastPlayedDate') || null;
 const keys = [
   "E",
   "R",
@@ -11163,17 +11162,18 @@ let currentAttempt = 1;
 
 
 // Check if the user has already played the daily word challenge today
-const currentDate = new Date().toLocaleDateString();
-if (lastPlayedDate === currentDate) {
-  localStorage.setItem("PNTisDailyMode", false);
-  
-}
+
 
 const chooseDailyWord = () => {
   // Check if the user has already played the daily word challenge today
+  const currentDate = new Date().toLocaleDateString();
+  console.log(currentDate)
+  const lastPlayedDate = localStorage.getItem('PNTlastPlayedDate');
+  console.log(lastPlayedDate)
 
-  if (!isDailyMode) {
-    showMessage("GÜNLÜK BULMACA TAMAMLANDI");
+  console.log(lastPlayedDate === currentDate)
+  if (lastPlayedDate === currentDate) {
+    showMessage("GÜNLÜK BULMACA TAMAMLANDI!");
     return;
   }
 
@@ -11181,9 +11181,6 @@ const chooseDailyWord = () => {
   localStorage.setItem('PNTchosenWord', dailyWord);
   wordle = dailyWord;
 
-  // Save the current date as the last played date
-  localStorage.setItem('PNTlastPlayedDate', currentDate);
-  
 
 };
 
@@ -11198,6 +11195,8 @@ const saveDailyGameCounter = () => {
 
 const completeDailyWord = () => {
   // Remove the chosenWord from localStorage to mark it as completed
+  const currentDate = new Date().toLocaleDateString();
+
   localStorage.removeItem('PNTchosenWord');
   // Update user statistics (assuming userStatistics is initialized)
   userStatistics.totalWordsFound++;
@@ -11205,7 +11204,10 @@ const completeDailyWord = () => {
   saveUserStatistics(); // Save the updated statistics to localStorage
   isDailyMode = false; // Set isDailyMode to true when the button is clicked
   // Save the updated isDailyMode to local storage
+   // Save the current date as the last played date
+  localStorage.setItem('PNTlastPlayedDate', currentDate);
   localStorage.setItem("PNTisDailyMode", JSON.stringify(isDailyMode));
+  console.log()
   dailyGameCounter++; // Increment the dailyGameCounter
   saveDailyGameCounter(); // Save   
 };
@@ -11283,7 +11285,7 @@ const deleteLetter = () => {
     tile.setAttribute("data", "");
   }
 };
-
+console.log(!(localStorage.getItem("PNTisDailyMode")))
 const checkRow = () => {
   const guess = guessRows[currentRow].join("");
   if (currentTile > 4) {
@@ -11297,7 +11299,7 @@ const checkRow = () => {
       saveUserStatistics(); // Save the updated statistics to localStorage
 
       if (wordle == guess) {
-        if (isDailyMode) {
+        if (localStorage.getItem("PNTisDailyMode")) {
           completeDailyWord();
         }
         isGameOver = true;
