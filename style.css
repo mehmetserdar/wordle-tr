@@ -238,14 +238,19 @@ a:hover {
 
 .message-container p {
     background-color: #0a0a0abb;
-    border-radius: 40px;
+    border-radius: 20px;
     color: #fff;
-    padding: 50px 100px 50px 100px;
+    padding: 40px 20px 40px 20px;
     margin: 0;
-    font-size: xx-large;
+    font-size: x-large;
     z-index: 9999;
-    float: none;
-    position: absolute;}
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
 
 .container {
     display: none;

@@ -1,8 +1,3 @@
-const tileDisplay = document.querySelector(".tile-container");
-const keyboard = document.querySelector(".key-container");
-const messageDisplay = document.querySelector(".message-container");
-const darkDisplay = document.querySelector("#dark");
-
 const dict = [
   "ABACI",
   "ABADİ",
@@ -11072,9 +11067,49 @@ const checkwords = [
   "ZÜRRA",
   "ZÜYUF",
 ];
+let dailyWord;
+let dailyNumber;
+const tileDisplay = document.querySelector(".tile-container");
+const keyboard = document.querySelector(".key-container");
+const messageDisplay = document.querySelector(".message-container");
+const darkDisplay = document.querySelector("#dark");
+// Function to fetch the daily number from the website
+// Fetch the daily number from the given URL
+
+const apiUrl = 'http://test.biri.link/api/daily-number'; // Use the relative URL since the server is running on the same domain
+
+const fetchDailyNumber = async () => {
+  try {
+    const response = await fetch(apiUrl);
+    if (!response.ok) {
+      throw new Error('Failed to fetch the daily number');
+    }
+    const data = await response.json();
+
+    // Assuming the API response contains the daily number as a property (e.g., data.number)
+    dailyNumber = data.number;
+    dailyWord = dict[dailyNumber];
+    // Now you can add your logic to use the daily number in your game.
+    // For example, you can set it as the chosenWord or use it in any other way you want.
+  } catch (error) {
+    console.error('Error fetching the daily number:', error.message);
+  }
+};
+
+fetchDailyNumber().then(() => {
+  dailyWord = dict[dailyNumber];
+});
+let isDailyMode = JSON.parse(localStorage.getItem("PNTisDailyMode")) || null;
 
 let random_number = Math.floor(Math.random() * dict.length);
 let wordle = dict[random_number];
+if (localStorage.getItem("PNTisDailyMode") === null) {
+  isDailyMode = true; // Set isDailyMode to true when the button is clicked
+  // Save the updated isDailyMode to local storage
+  localStorage.setItem("PNTisDailyMode", JSON.stringify(isDailyMode));
+}
+let dailyGameCounter = JSON.parse(localStorage.getItem("PNTdailyGameCounter")) || 0;
+let lastPlayedDate = localStorage.getItem('PNTlastPlayedDate') || null;
 const keys = [
   "E",
   "R",
@@ -11124,7 +11159,67 @@ let shareString = "";
 let info;
 let currentAttempt = 1;
 
-console.log(wordle)
+
+
+
+// Check if the user has already played the daily word challenge today
+const currentDate = new Date().toLocaleDateString();
+if (lastPlayedDate === currentDate) {
+  localStorage.setItem("PNTisDailyMode", false);
+  
+}
+
+const chooseDailyWord = () => {
+  // Check if the user has already played the daily word challenge today
+
+  if (!isDailyMode) {
+    showMessage("GÜNLÜK BULMACA TAMAMLANDI");
+    return;
+  }
+
+  // Choose the daily word and save it to localStorage
+  localStorage.setItem('PNTchosenWord', dailyWord);
+  wordle = dailyWord;
+
+  // Save the current date as the last played date
+  localStorage.setItem('PNTlastPlayedDate', currentDate);
+  
+
+};
+
+const hasPlayedDailyWord = () => {
+  // Check if the chosenWord is already present in localStorage
+  return localStorage.getItem('PNTchosenWord') !== null;
+};
+
+const saveDailyGameCounter = () => {
+  localStorage.setItem("PNTdailyGameCounter", JSON.stringify(dailyGameCounter));
+};
+
+const completeDailyWord = () => {
+  // Remove the chosenWord from localStorage to mark it as completed
+  localStorage.removeItem('PNTchosenWord');
+  // Update user statistics (assuming userStatistics is initialized)
+  userStatistics.totalWordsFound++;
+  userStatistics.userCoin += 100; // Award 100 coins for finding the daily word
+  saveUserStatistics(); // Save the updated statistics to localStorage
+  isDailyMode = false; // Set isDailyMode to true when the button is clicked
+  // Save the updated isDailyMode to local storage
+  localStorage.setItem("PNTisDailyMode", JSON.stringify(isDailyMode));
+  dailyGameCounter++; // Increment the dailyGameCounter
+  saveDailyGameCounter(); // Save   
+};
+
+dailyWordButton.addEventListener("click", () => {
+  
+  chooseDailyWord(); // Start the game after setting the isDailyMode
+});
+
+const updateDailyGameCounterDisplay = () => {
+  const tamamlananElement = document.getElementById("tamamlanan");
+  tamamlananElement.textContent = dailyGameCounter;
+};
+
 
 guessRows.forEach((guessRow, guessRowIndex) => {
   const rowElement = document.createElement("div");
@@ -11193,7 +11288,7 @@ const checkRow = () => {
   const guess = guessRows[currentRow].join("");
   if (currentTile > 4) {
     if (!checkwords.includes(guess)) {
-      showMessage("KELİME LİSTEDE YOK");
+      showMessage("KELİME LİSTEDE YOK!");
       return;
     } else {
       // Word found
@@ -11202,7 +11297,9 @@ const checkRow = () => {
       saveUserStatistics(); // Save the updated statistics to localStorage
 
       if (wordle == guess) {
-
+        if (isDailyMode) {
+          completeDailyWord();
+        }
         isGameOver = true;
         setTimeout(() => {
           // Display user statistics
@@ -11342,6 +11439,14 @@ const saveUserStatistics = () => {
 
 const showUserStatistics = () => {
     const resultsElement = document.getElementById('results');
+    // Check if the daily word challenge was completed
+  if (hasPlayedDailyWord()) {
+    const dailyWordChallengeText = "Günlük Kelime Oyunları: Tamamlandı";
+    resultsElement.textContent += `\n${dailyWordChallengeText}`;
+  } else {
+    const dailyWordChallengeText = "Günlük Kelime Oyunları: Tamamlanmadı";
+    resultsElement.textContent += `\n${dailyWordChallengeText}`;
+  }
     const statisticsString =
         `BULUNAN KELİME SAYISI: ${userStatistics.totalWordsFound}\n` ;
         
@@ -11357,6 +11462,8 @@ const showUserStatistics = () => {
     const attemptsTextList = Object.entries(attemptsCountMap).map(([attempts, count]) => {
         return `${count} kez ${attempts}. tahminde buldun.\n`;
     });
+
+    
 
     const gameDiv = document.createElement('div');
     gameDiv.classList.add("pt-5")
@@ -11384,8 +11491,6 @@ const updateUserCoinDisplay = () => {
     userCoinDisplay.textContent = userStatistics.userCoin;
 };
 
-
-
-
-
 updateUserCoinDisplay();
+updateDailyGameCounterDisplay();
+
