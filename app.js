@@ -11311,6 +11311,7 @@ const checkRow = () => {
           
           saveUserStatistics();
           showUserStatistics();
+          updateUserCoinDisplay();
           var box = document.getElementById("endContainer");
           box.style.display = "block";
         }, 3000);
