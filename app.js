@@ -11523,9 +11523,10 @@ const updateUserCoinDisplay = () => {
 };
 
 const showIpucu= () => {
-  const ipucu = document.getElementById('ipucu');
-  ipucuMu = true;
+  
   if(userStatistics.userCoin >= 200){
+    const ipucu = document.getElementById('ipucu');
+    ipucuMu = true;
     userStatistics.userCoin -= 200;          
     saveUserStatistics();
     ipucu.textContent = ''; // Clear existing content
@@ -11538,6 +11539,7 @@ const showIpucu= () => {
 
   } else{
     showMessage("YETERLİ JETON YOK!")
+
   }
   
 };
