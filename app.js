@@ -11080,13 +11080,13 @@ const darkDisplay = document.querySelector("#dark");
 // Function to fetch the daily number from the website
 // Fetch the daily number from the given URL
 
-const apiUrl = 'https://test.biri.link/api/daily-number'; // Use the relative URL since the server is running on the same domain
+const apiUrl = "https://test.biri.link/api/daily-number"; // Use the relative URL since the server is running on the same domain
 
 const fetchDailyNumber = async () => {
   try {
     const response = await fetch(apiUrl);
     if (!response.ok) {
-      throw new Error('Failed to fetch the daily number');
+      throw new Error("Failed to fetch the daily number");
     }
     const data = await response.json();
 
@@ -11096,7 +11096,7 @@ const fetchDailyNumber = async () => {
     // Now you can add your logic to use the daily number in your game.
     // For example, you can set it as the chosenWord or use it in any other way you want.
   } catch (error) {
-    console.error('Error fetching the daily number:', error.message);
+    console.error("Error fetching the daily number:", error.message);
   }
 };
 
@@ -11106,7 +11106,7 @@ fetchDailyNumber().then(() => {
 let isDailyMode;
 let random_number = Math.floor(Math.random() * dict.length);
 let wordle = dict[random_number];
-console.log(localStorage.getItem("PNTisDailyMode") === null)
+console.log(localStorage.getItem("PNTisDailyMode") === null);
 if (localStorage.getItem("PNTisDailyMode") === null) {
   isDailyMode = true; // Set isDailyMode to true when the button is clicked
   // Save the updated isDailyMode to local storage
@@ -11161,18 +11161,16 @@ let ipucu = "KELİME:" + "\n" + wordle;
 let shareString = "";
 let info;
 let currentAttempt = 1;
-console.log(wordle)
-
+console.log(wordle);
 
 // Check if the user has already played the daily word challenge today
 
-
 const chooseDailyWord = () => {
   // Check if the user has already played the daily word challenge today
-  const lastPlayedDate = localStorage.getItem('PNTlastPlayedDate');
-  console.log(lastPlayedDate)
+  const lastPlayedDate = localStorage.getItem("PNTlastPlayedDate");
+  console.log(lastPlayedDate);
 
-  console.log(lastPlayedDate === currentDate)
+  console.log(lastPlayedDate === currentDate);
   if (lastPlayedDate === currentDate) {
     showMessage("YENİ BULMACA YARIN!");
     localStorage.setItem("PNTisDailyMode", false);
@@ -11180,55 +11178,50 @@ const chooseDailyWord = () => {
   }
 
   // Choose the daily word and save it to localStorage
-  localStorage.setItem('PNTchosenWord', dailyWord);
+  localStorage.setItem("PNTchosenWord", dailyWord);
   wordle = dailyWord;
-  gunlukOn.style.color = "limegreen"
-
+  gunlukOn.style.color = "limegreen";
 };
 
 const hasPlayedDailyWord = () => {
   // Check if the chosenWord is already present in localStorage
-  return localStorage.getItem('PNTchosenWord') !== null;
+  return localStorage.getItem("PNTchosenWord") !== null;
 };
-
-
 
 const completeDailyWord = () => {
   // Remove the chosenWord from localStorage to mark it as completed
   const currentDate = new Date().toLocaleDateString();
 
-  localStorage.removeItem('PNTchosenWord');
+  localStorage.removeItem("PNTchosenWord");
   // Update user statistics (assuming userStatistics is initialized)
-  if(!ipucuMu){
- 
-  isDailyMode = false; // Set isDailyMode to true when the button is clicked
-  
-  // Save the updated isDailyMode to local storage
-   // Save the current date as the last played date
-  localStorage.setItem('PNTlastPlayedDate', currentDate);
-  localStorage.setItem("PNTisDailyMode", JSON.stringify(isDailyMode));
-  if(!ipucuMu){
-    userStatistics.userCoin += 100; // Award 100 coins for finding the daily word
-    saveUserStatistics(); // Save the updated statistics to localStorage
-    userStatistics.totalWordsFound++;
-    userStatistics.finalAttemptsPerGame.push(currentAttempt);
-  isGameOver = true;}
-  setTimeout(() => {
-    // Display user statistics
-    
-    saveUserStatistics();
-    showUserStatistics();
-    updateUserCoinDisplay();
-    var box = document.getElementById("endContainer");
-    box.style.display = "block";
-  }, 3000);
-  return;
+  if (!ipucuMu) {
+    isDailyMode = false; // Set isDailyMode to true when the button is clicked
+
+    // Save the updated isDailyMode to local storage
+    // Save the current date as the last played date
+    localStorage.setItem("PNTlastPlayedDate", currentDate);
+    localStorage.setItem("PNTisDailyMode", JSON.stringify(isDailyMode));
+    if (!ipucuMu) {
+      userStatistics.userCoin += 100; // Award 100 coins for finding the daily word
+      saveUserStatistics(); // Save the updated statistics to localStorage
+      userStatistics.totalWordsFound++;
+      userStatistics.finalAttemptsPerGame.push(currentAttempt);
+      isGameOver = true;
+    }
+    setTimeout(() => {
+      // Display user statistics
+
+      saveUserStatistics();
+      showUserStatistics();
+      updateUserCoinDisplay();
+      var box = document.getElementById("endContainer");
+      box.style.display = "block";
+    }, 3000);
+    return;
   }
-   
 };
 
 dailyWordButton.addEventListener("click", () => {
-  
   chooseDailyWord(); // Start the game after setting the isDailyMode
 });
 
@@ -11236,7 +11229,6 @@ const updateDailyGameCounterDisplay = () => {
   const tamamlananElement = document.getElementById("tamamlanan");
   tamamlananElement.textContent = userStatistics.totalWordsFound;
 };
-
 
 guessRows.forEach((guessRow, guessRowIndex) => {
   const rowElement = document.createElement("div");
@@ -11300,11 +11292,13 @@ const deleteLetter = () => {
     tile.setAttribute("data", "");
   }
 };
-lastPlayedDate = localStorage.getItem('PNTlastPlayedDate');
+lastPlayedDate = localStorage.getItem("PNTlastPlayedDate");
 
-console.log((localStorage.getItem("PNTisDailyMode") === true))
-console.log((localStorage.getItem("PNTisDailyMode")))
-console.log(localStorage.getItem("PNTisDailyMode") && lastPlayedDate !== currentDate)
+console.log(localStorage.getItem("PNTisDailyMode") === true);
+console.log(localStorage.getItem("PNTisDailyMode"));
+console.log(
+  localStorage.getItem("PNTisDailyMode") && lastPlayedDate !== currentDate
+);
 const checkRow = () => {
   const guess = guessRows[currentRow].join("");
   if (currentTile > 4) {
@@ -11318,28 +11312,34 @@ const checkRow = () => {
       saveUserStatistics(); // Save the updated statistics to localStorage
 
       if (wordle == guess) {
-        if(dailyWord == guess){
+        if (dailyWord == guess) {
           completeDailyWord();
-        }else{
-          if(!ipucuMu){
+        } else {
+          if (!ipucuMu) {
             userStatistics.userCoin += 100; // Award 100 coins for finding the daily word
             saveUserStatistics(); // Save the updated statistics to localStorage
             userStatistics.totalWordsFound++;
             userStatistics.finalAttemptsPerGame.push(currentAttempt);
-          isGameOver = true;}
+            isGameOver = true;
+          }
           setTimeout(() => {
             // Display user statistics
-            
+
             saveUserStatistics();
             showUserStatistics();
             updateUserCoinDisplay();
+            const link = document.createElement("a");
+            link.textContent = wordle + " NEDİR? ";
+            link.href = `https://www.google.com/search?q=${encodeURIComponent(
+              wordle
+            )}+nedir`;
+            link.target = "_blank"; // Open the link in a new tab
             var box = document.getElementById("endContainer");
+            box.appendChild(link);
             box.style.display = "block";
           }, 3000);
           return;
         }
-          
-          
       } else {
         if (currentRow >= 5) {
           isGameOver = true;
@@ -11384,7 +11384,6 @@ const flipTile = () => {
       color: "grey-overlay",
     });
   });
-  
 
   guess.forEach((guess) => {
     if (checkWordle.includes(guess.letter)) {
@@ -11454,10 +11453,10 @@ const closePopup = () => {
 
 // Initialize user statistics from localStorage or create a new object if not present
 let userStatistics = JSON.parse(localStorage.getItem("WordUserStats")) || {
-    totalWordsFound: 0,
-    totalGamesPlayed: 0,
-    finalAttemptsPerGame: [], // Initialize an empty array to store final attempts for each game
-    userCoin: 0 // Initialize the userCoin property with 0 coins
+  totalWordsFound: 0,
+  totalGamesPlayed: 0,
+  finalAttemptsPerGame: [], // Initialize an empty array to store final attempts for each game
+  userCoin: 0, // Initialize the userCoin property with 0 coins
 };
 
 const saveUserStatistics = () => {
@@ -11466,45 +11465,47 @@ const saveUserStatistics = () => {
 };
 
 const showUserStatistics = () => {
-    const resultsElement = document.getElementById('results');
-    const statisticsString =
-        `BULUNAN KELİME SAYISI ${userStatistics.totalWordsFound}\n` ;
-        
-    resultsElement.textContent = statisticsString;
-    const attemptsPerWordDisplay = document.getElementById('attemptsPerWordDisplay');
-    attemptsPerWordDisplay.innerHTML = '';
+  const resultsElement = document.getElementById("results");
+  const statisticsString = `BULUNAN KELİME SAYISI ${userStatistics.totalWordsFound}\n`;
 
-    const attemptsCountMap = userStatistics.finalAttemptsPerGame.reduce((map, attempts) => {
-        map[attempts] = (map[attempts] || 0) + 1;
-        return map;
-    }, {});
+  resultsElement.textContent = statisticsString;
+  const attemptsPerWordDisplay = document.getElementById(
+    "attemptsPerWordDisplay"
+  );
+  attemptsPerWordDisplay.innerHTML = "";
 
-    const attemptsTextList = Object.entries(attemptsCountMap).map(([attempts, count]) => {
-        return `${count} kez ${attempts}. tahminde buldun.\n`;
-        
-    });
+  const attemptsCountMap = userStatistics.finalAttemptsPerGame.reduce(
+    (map, attempts) => {
+      map[attempts] = (map[attempts] || 0) + 1;
+      return map;
+    },
+    {}
+  );
 
-    
+  const attemptsTextList = Object.entries(attemptsCountMap).map(
+    ([attempts, count]) => {
+      return `${count} kez ${attempts}. tahminde buldun.\n`;
+    }
+  );
 
-    const gameDiv = document.createElement('div');
-    gameDiv.classList.add("pt-5")
-    gameDiv.textContent = attemptsTextList.join('\n');
-    attemptsPerWordDisplay.appendChild(gameDiv);
-    var box = document.getElementById("infoo");
-    box.style.display = "none";
+  const gameDiv = document.createElement("div");
+  gameDiv.classList.add("pt-5");
+  gameDiv.textContent = attemptsTextList.join("\n");
+  attemptsPerWordDisplay.appendChild(gameDiv);
+  var box = document.getElementById("infoo");
+  box.style.display = "none";
 
-    // Create a reload button
-    const reloadButton = document.createElement('button');
-    reloadButton.textContent = 'YENİ OYUN';
-    reloadButton.addEventListener('click', () => {
-        location.reload();
-    });
+  // Create a reload button
+  const reloadButton = document.createElement("button");
+  reloadButton.textContent = "YENİ OYUN";
+  reloadButton.addEventListener("click", () => {
+    location.reload();
+  });
 
-    // Append the reload button to the resultsElement
-    resultsElement.appendChild(reloadButton);
+  // Append the reload button to the resultsElement
+  resultsElement.appendChild(reloadButton);
 
-
-    //
+  //
 };
 
 // Function to reset user statistics if needed
@@ -11516,34 +11517,23 @@ const resetUserStatistics = () => {
   saveUserStatistics();
 };
 
-
 const updateUserCoinDisplay = () => {
-    const userCoinDisplay = document.getElementById('userCoinDisplay');
-    userCoinDisplay.textContent = userStatistics.userCoin;
+  const userCoinDisplay = document.getElementById("userCoinDisplay");
+  userCoinDisplay.textContent = userStatistics.userCoin;
 };
 
-const showIpucu= () => {
-  
-  if(userStatistics.userCoin >= 200){
-    const ipucu = document.getElementById('ipucu');
+const showIpucu = () => {
+  if (userStatistics.userCoin >= 200) {
+    const ipucu = document.getElementById("ipucu");
     ipucuMu = true;
-    userStatistics.userCoin -= 200;          
+    userStatistics.userCoin -= 200;
     saveUserStatistics();
-    ipucu.textContent = ''; // Clear existing content
-    const link = document.createElement('a');
-    link.textContent = wordle;
-    link.href = `https://www.google.com/search?q=${encodeURIComponent(wordle)}+nedir`;
-    link.target = '_blank'; // Open the link in a new tab
-    ipucu.appendChild(link);
+    ipucu.textContent = wordle;
     updateUserCoinDisplay();
-
-  } else{
-    showMessage("YETERLİ JETON YOK!")
-
+  } else {
+    showMessage("YETERLİ JETON YOK!");
   }
-  
 };
 
 updateUserCoinDisplay();
 updateDailyGameCounterDisplay();
-
