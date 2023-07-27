@@ -56,7 +56,26 @@ a{
     color: #3a3a3c;
     position: absolute;    
     top: 0.2vh;
-  
+}
+
+#ipucuu{
+    color: #3a3a3c;
+    position: absolute;
+    width:48px;
+    height: 48px;
+    top: 3.8vh;
+    font-size: x-large;
+
+}
+
+#ipucu{
+    color: #3a3a3c;
+    position: absolute;
+    width:48px;
+    height: 48px;
+    top: 4.5vh;
+    left: 4.5vh;
+
 }
 
 
@@ -211,17 +230,19 @@ a:hover {
 
 .tile-container .tile {
     width: 100%;
-    height: 86px;
+    height: 83px;
     border: 1px solid #b9b9b9;
-    border-radius: 8px;
+    border-radius: 10px;
     box-sizing: border-box;
     color: #fff;
     font-size: xx-large;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 2px;
+    margin-left: 2px;
+    margin-right: 2px;
 }
+
 
 #end-container  {
     
@@ -429,9 +450,10 @@ a:hover {
 
   button{
     color: #fff;
-    background-color: #000;
+    background-color: #161616;
     border-color: #222;
     text-transform: uppercase;
+    border-radius: 10px;
 }
 
 /* Add the necessary styles to position the userCoinContainer */
@@ -446,11 +468,14 @@ a:hover {
 
 #userCoinDisplay{
     position: fixed;
-    top: 3vh;
-    left: 5.5vh; /* Adjust the right position as needed */
+    top: 2.5vh;
+    left: 5.3vh; /* Adjust the right position as needed */
 
 }
 
-
+#gunlukOn{
+    font-size: x-large;
+  
+}
 
 

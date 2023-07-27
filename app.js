@@ -11077,7 +11077,7 @@ const darkDisplay = document.querySelector("#dark");
 // Function to fetch the daily number from the website
 // Fetch the daily number from the given URL
 
-const apiUrl = 'https://daily-number-api-2d1c1b609c44.herokuapp.com/api/daily-number'; // Use the relative URL since the server is running on the same domain
+const apiUrl = 'https://test.biri.link/api/daily-number'; // Use the relative URL since the server is running on the same domain
 
 const fetchDailyNumber = async () => {
   try {
@@ -11154,11 +11154,10 @@ const guessRows = [
 let currentRow = 0;
 let currentTile = 0;
 let isGameOver = false;
-let shareMsg = "TEBRİKLER\n" + "\n" + wordle;
+let ipucu = "KELİME:" + "\n" + wordle;
 let shareString = "";
 let info;
 let currentAttempt = 1;
-
 
 
 
@@ -11174,7 +11173,7 @@ const chooseDailyWord = () => {
 
   console.log(lastPlayedDate === currentDate)
   if (lastPlayedDate === currentDate) {
-    showMessage("GÜNLÜK BULMACA TAMAMLANDI!");
+    showMessage("YENİ BULMACA YARIN!");
     return;
   }
 
@@ -11451,7 +11450,7 @@ const showUserStatistics = () => {
     resultsElement.textContent += `\n${dailyWordChallengeText}`;
   }
     const statisticsString =
-        `BULUNAN KELİME SAYISI: ${userStatistics.totalWordsFound}\n` ;
+        `BULUNAN KELİME SAYISI ${userStatistics.totalWordsFound}\n` ;
         
     resultsElement.textContent = statisticsString;
     const attemptsPerWordDisplay = document.getElementById('attemptsPerWordDisplay');
@@ -11464,16 +11463,27 @@ const showUserStatistics = () => {
 
     const attemptsTextList = Object.entries(attemptsCountMap).map(([attempts, count]) => {
         return `${count} kez ${attempts}. tahminde buldun.\n`;
+        
     });
 
     
 
     const gameDiv = document.createElement('div');
     gameDiv.classList.add("pt-5")
-    gameDiv.textContent = attemptsTextList.join('');
+    gameDiv.textContent = attemptsTextList.join('\n');
     attemptsPerWordDisplay.appendChild(gameDiv);
     var box = document.getElementById("infoo");
     box.style.display = "none";
+
+    // Create a reload button
+    const reloadButton = document.createElement('button');
+    reloadButton.textContent = 'YENİ OYUN';
+    reloadButton.addEventListener('click', () => {
+        location.reload();
+    });
+
+    // Append the reload button to the resultsElement
+    resultsElement.appendChild(reloadButton);
 
 
     //
@@ -11492,6 +11502,20 @@ const resetUserStatistics = () => {
 const updateUserCoinDisplay = () => {
     const userCoinDisplay = document.getElementById('userCoinDisplay');
     userCoinDisplay.textContent = userStatistics.userCoin;
+};
+
+const showIpucu= () => {
+  const ipucu = document.getElementById('ipucu');
+  if(userStatistics.userCoin >= 200){
+    userStatistics.userCoin -= 200;          
+    saveUserStatistics();
+    ipucu.textContent = wordle;
+    updateUserCoinDisplay();
+
+  } else{
+    showMessage("YETERLİ JETON YOK!")
+  }
+  
 };
 
 updateUserCoinDisplay();
