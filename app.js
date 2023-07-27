@@ -11158,7 +11158,7 @@ let ipucu = "KELİME:" + "\n" + wordle;
 let shareString = "";
 let info;
 let currentAttempt = 1;
-
+//console.log(wordle)
 
 
 // Check if the user has already played the daily word challenge today
@@ -11306,7 +11306,6 @@ const checkRow = () => {
         setTimeout(() => {
           // Display user statistics
           userStatistics.totalWordsFound++;
-          userStatistics.userCoin += 100;
           userStatistics.finalAttemptsPerGame.push(currentAttempt);
           
           saveUserStatistics();
