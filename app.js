@@ -11070,6 +11070,8 @@ const checkwords = [
 let dailyWord;
 let dailyNumber;
 let ipucuMu = false;
+const currentDate = new Date().toLocaleDateString();
+
 const tileDisplay = document.querySelector(".tile-container");
 const gunlukOn = document.querySelector("#gunlukOn");
 const keyboard = document.querySelector(".key-container");
@@ -11110,7 +11112,7 @@ if (localStorage.getItem("PNTisDailyMode") === null) {
   // Save the updated isDailyMode to local storage
   localStorage.setItem("PNTisDailyMode", JSON.stringify(isDailyMode));
 }
-let dailyGameCounter = JSON.parse(localStorage.getItem("PNTdailyGameCounter")) || 0;
+
 const keys = [
   "E",
   "R",
@@ -11159,7 +11161,7 @@ let ipucu = "KELİME:" + "\n" + wordle;
 let shareString = "";
 let info;
 let currentAttempt = 1;
-//console.log(wordle)
+console.log(wordle)
 
 
 // Check if the user has already played the daily word challenge today
@@ -11167,14 +11169,13 @@ let currentAttempt = 1;
 
 const chooseDailyWord = () => {
   // Check if the user has already played the daily word challenge today
-  const currentDate = new Date().toLocaleDateString();
-  console.log(currentDate)
   const lastPlayedDate = localStorage.getItem('PNTlastPlayedDate');
   console.log(lastPlayedDate)
 
   console.log(lastPlayedDate === currentDate)
   if (lastPlayedDate === currentDate) {
     showMessage("YENİ BULMACA YARIN!");
+    localStorage.setItem("PNTisDailyMode", false);
     return;
   }
 
@@ -11190,9 +11191,7 @@ const hasPlayedDailyWord = () => {
   return localStorage.getItem('PNTchosenWord') !== null;
 };
 
-const saveDailyGameCounter = () => {
-  localStorage.setItem("PNTdailyGameCounter", JSON.stringify(dailyGameCounter));
-};
+
 
 const completeDailyWord = () => {
   // Remove the chosenWord from localStorage to mark it as completed
@@ -11201,18 +11200,29 @@ const completeDailyWord = () => {
   localStorage.removeItem('PNTchosenWord');
   // Update user statistics (assuming userStatistics is initialized)
   if(!ipucuMu){
-  userStatistics.userCoin += 100; // Award 100 coins for finding the daily word
-  saveUserStatistics(); // Save the updated statistics to localStorage
+ 
   isDailyMode = false; // Set isDailyMode to true when the button is clicked
-  userStatistics.totalWordsFound++;
-          userStatistics.finalAttemptsPerGame.push(currentAttempt);
+  
   // Save the updated isDailyMode to local storage
    // Save the current date as the last played date
   localStorage.setItem('PNTlastPlayedDate', currentDate);
   localStorage.setItem("PNTisDailyMode", JSON.stringify(isDailyMode));
-  console.log()
-  dailyGameCounter++; // Increment the dailyGameCounter
-  saveDailyGameCounter(); // Save  
+  if(!ipucuMu){
+    userStatistics.userCoin += 100; // Award 100 coins for finding the daily word
+    saveUserStatistics(); // Save the updated statistics to localStorage
+    userStatistics.totalWordsFound++;
+    userStatistics.finalAttemptsPerGame.push(currentAttempt);
+  isGameOver = true;}
+  setTimeout(() => {
+    // Display user statistics
+    
+    saveUserStatistics();
+    showUserStatistics();
+    updateUserCoinDisplay();
+    var box = document.getElementById("endContainer");
+    box.style.display = "block";
+  }, 3000);
+  return;
   }
    
 };
@@ -11224,7 +11234,7 @@ dailyWordButton.addEventListener("click", () => {
 
 const updateDailyGameCounterDisplay = () => {
   const tamamlananElement = document.getElementById("tamamlanan");
-  tamamlananElement.textContent = dailyGameCounter;
+  tamamlananElement.textContent = userStatistics.totalWordsFound;
 };
 
 
@@ -11290,7 +11300,11 @@ const deleteLetter = () => {
     tile.setAttribute("data", "");
   }
 };
-console.log(!(localStorage.getItem("PNTisDailyMode")))
+lastPlayedDate = localStorage.getItem('PNTlastPlayedDate');
+
+console.log((localStorage.getItem("PNTisDailyMode") === true))
+console.log((localStorage.getItem("PNTisDailyMode")))
+console.log(localStorage.getItem("PNTisDailyMode") && lastPlayedDate !== currentDate)
 const checkRow = () => {
   const guess = guessRows[currentRow].join("");
   if (currentTile > 4) {
@@ -11304,20 +11318,28 @@ const checkRow = () => {
       saveUserStatistics(); // Save the updated statistics to localStorage
 
       if (wordle == guess) {
-        if (localStorage.getItem("PNTisDailyMode")) {
+        if(dailyWord == guess){
           completeDailyWord();
+        }else{
+          if(!ipucuMu){
+            userStatistics.userCoin += 100; // Award 100 coins for finding the daily word
+            saveUserStatistics(); // Save the updated statistics to localStorage
+            userStatistics.totalWordsFound++;
+            userStatistics.finalAttemptsPerGame.push(currentAttempt);
+          isGameOver = true;}
+          setTimeout(() => {
+            // Display user statistics
+            
+            saveUserStatistics();
+            showUserStatistics();
+            updateUserCoinDisplay();
+            var box = document.getElementById("endContainer");
+            box.style.display = "block";
+          }, 3000);
+          return;
         }
-        isGameOver = true;
-        setTimeout(() => {
-          // Display user statistics
           
-          saveUserStatistics();
-          showUserStatistics();
-          updateUserCoinDisplay();
-          var box = document.getElementById("endContainer");
-          box.style.display = "block";
-        }, 3000);
-        return;
+          
       } else {
         if (currentRow >= 5) {
           isGameOver = true;
@@ -11362,17 +11384,18 @@ const flipTile = () => {
       color: "grey-overlay",
     });
   });
-
-  guess.forEach((guess, index) => {
-    if (guess.letter == wordle[index]) {
-      guess.color = "green-overlay";
-      checkWordle = checkWordle.replace(guess.letter, "");
-    }
-  });
+  
 
   guess.forEach((guess) => {
     if (checkWordle.includes(guess.letter)) {
       guess.color = "yellow-overlay";
+      checkWordle = checkWordle.replace(guess.letter, "");
+    }
+  });
+
+  guess.forEach((guess, index) => {
+    if (guess.letter == wordle[index]) {
+      guess.color = "green-overlay";
       checkWordle = checkWordle.replace(guess.letter, "");
     }
   });
@@ -11444,14 +11467,6 @@ const saveUserStatistics = () => {
 
 const showUserStatistics = () => {
     const resultsElement = document.getElementById('results');
-    // Check if the daily word challenge was completed
-  if (hasPlayedDailyWord()) {
-    const dailyWordChallengeText = "Günlük Kelime Oyunları: Tamamlandı";
-    resultsElement.textContent += `\n${dailyWordChallengeText}`;
-  } else {
-    const dailyWordChallengeText = "Günlük Kelime Oyunları: Tamamlanmadı";
-    resultsElement.textContent += `\n${dailyWordChallengeText}`;
-  }
     const statisticsString =
         `BULUNAN KELİME SAYISI ${userStatistics.totalWordsFound}\n` ;
         
@@ -11513,7 +11528,12 @@ const showIpucu= () => {
   if(userStatistics.userCoin >= 200){
     userStatistics.userCoin -= 200;          
     saveUserStatistics();
-    ipucu.textContent = wordle;
+    ipucu.textContent = ''; // Clear existing content
+    const link = document.createElement('a');
+    link.textContent = wordle;
+    link.href = `https://www.google.com/search?q=${encodeURIComponent(wordle)}+nedir`;
+    link.target = '_blank'; // Open the link in a new tab
+    ipucu.appendChild(link);
     updateUserCoinDisplay();
 
   } else{
