@@ -11070,6 +11070,7 @@ const checkwords = [
 let dailyWord;
 let dailyNumber;
 const tileDisplay = document.querySelector(".tile-container");
+const gunlukOn = document.querySelector("#gunlukOn");
 const keyboard = document.querySelector(".key-container");
 const messageDisplay = document.querySelector(".message-container");
 const darkDisplay = document.querySelector("#dark");
@@ -11180,7 +11181,7 @@ const chooseDailyWord = () => {
   // Choose the daily word and save it to localStorage
   localStorage.setItem('PNTchosenWord', dailyWord);
   wordle = dailyWord;
-
+  gunlukOn.style.color = "limegreen"
 
 };
 
