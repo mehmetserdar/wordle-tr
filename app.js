@@ -11069,6 +11069,7 @@ const checkwords = [
 ];
 let dailyWord;
 let dailyNumber;
+let ipucuMu = false;
 const tileDisplay = document.querySelector(".tile-container");
 const gunlukOn = document.querySelector("#gunlukOn");
 const keyboard = document.querySelector(".key-container");
@@ -11199,17 +11200,21 @@ const completeDailyWord = () => {
 
   localStorage.removeItem('PNTchosenWord');
   // Update user statistics (assuming userStatistics is initialized)
-  userStatistics.totalWordsFound++;
+  if(!ipucuMu){
   userStatistics.userCoin += 100; // Award 100 coins for finding the daily word
   saveUserStatistics(); // Save the updated statistics to localStorage
   isDailyMode = false; // Set isDailyMode to true when the button is clicked
+  userStatistics.totalWordsFound++;
+          userStatistics.finalAttemptsPerGame.push(currentAttempt);
   // Save the updated isDailyMode to local storage
    // Save the current date as the last played date
   localStorage.setItem('PNTlastPlayedDate', currentDate);
   localStorage.setItem("PNTisDailyMode", JSON.stringify(isDailyMode));
   console.log()
   dailyGameCounter++; // Increment the dailyGameCounter
-  saveDailyGameCounter(); // Save   
+  saveDailyGameCounter(); // Save  
+  }
+   
 };
 
 dailyWordButton.addEventListener("click", () => {
@@ -11305,8 +11310,6 @@ const checkRow = () => {
         isGameOver = true;
         setTimeout(() => {
           // Display user statistics
-          userStatistics.totalWordsFound++;
-          userStatistics.finalAttemptsPerGame.push(currentAttempt);
           
           saveUserStatistics();
           showUserStatistics();
@@ -11506,6 +11509,7 @@ const updateUserCoinDisplay = () => {
 
 const showIpucu= () => {
   const ipucu = document.getElementById('ipucu');
+  ipucuMu = true;
   if(userStatistics.userCoin >= 200){
     userStatistics.userCoin -= 200;          
     saveUserStatistics();
