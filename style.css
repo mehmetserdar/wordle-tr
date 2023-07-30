@@ -22,6 +22,10 @@ a{
 }
 
 
+.mt-1{
+    margin-top: 20px;
+}
+
 .pt-5{
     padding-top: 190px;
     font-size: 24px;
@@ -47,9 +51,20 @@ a{
     width:48px;
     height: 48px;
     top: 1.1vh;
-    right: 5.5vh;
-  
-  
+    right: 5.5vh; 
+ 
+}
+
+
+
+#stats{
+    color: #3a3a3c;
+    position: absolute;
+    width:48px;
+    height: 48px;
+    top: 1.1vh;
+    right: 10.5vh; 
+ 
 }
 
 .piggy{
@@ -290,13 +305,7 @@ a:hover {
 }
 
 #results {
-    position: absolute;
-    padding: 10px;    
-    white-space: pre-wrap;
-    font-size: 28px;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+   padding: 0;
     
 }
 
@@ -306,6 +315,29 @@ a:hover {
     padding: 10px 0 10px 0;    
     white-space: pre-wrap;
     font-size: 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+}
+
+
+#statss {
+    position: absolute;
+    padding: 10px 0 10px 0;    
+    white-space: pre-wrap;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+}
+
+#gameEnd {
+    position: absolute;
+    padding: 40px;    
+    white-space: pre-wrap;
+    font-size: 24px;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -476,4 +508,40 @@ a:hover {
   
 }
 
+#graphContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 200px;
+    
+    margin-left: 5px;
 
+  }
+  
+  .bar {
+    width: 40px;
+    background-color: #007bff;
+    margin-bottom: 10px;
+  }
+  
+  /* Customize the colors for each bar */
+  #bar1 {
+    height: 20px;
+  }
+  #bar2 {
+    height: 40px;
+  }
+  #bar3 {
+    height: 60px;
+  }
+  #bar4 {
+    height: 80px;
+  }
+  #bar5 {
+    height: 100px;
+  }
+  #bar6 {
+    height: 120px;
+  }
+  
+  

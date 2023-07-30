@@ -11099,9 +11099,10 @@ const fetchDailyNumber = async () => {
     console.error("Error fetching the daily number:", error.message);
   }
 };
-
 fetchDailyNumber().then(() => {
   dailyWord = dict[dailyNumber];
+  //console.log(dailyWord)
+
 });
 let isDailyMode;
 let random_number = Math.floor(Math.random() * dict.length);
@@ -11214,8 +11215,16 @@ const completeDailyWord = () => {
       saveUserStatistics();
       showUserStatistics();
       updateUserCoinDisplay();
-      var box = document.getElementById("endContainer");
-      box.style.display = "block";
+      const link = document.createElement("a");
+            link.textContent = wordle + " NEDİR? ";
+            link.href = `https://www.google.com/search?q=${encodeURIComponent(
+              wordle
+            )}+nedir`;
+            link.target = "_blank"; // Open the link in a new tab
+            var box = document.getElementById("endContainer");
+            box.appendChild(link);
+            box.style.display = "block";
+      
     }, 3000);
     return;
   }
@@ -11442,8 +11451,14 @@ const infoPopup = () => {
     "\n\u{1F7E9} harf kelimede var ve doğru yerde." +
     "\n\u{1F7E8} harf kelimede var fakat yanlış yerde. " +
     "\n\u{2B1B} harf kelimede yok.";
+    var box1 = document.getElementById("attemptsPerWordDisplay");
+ box1.style.display = "none";
+ var box2 = document.getElementById("gameEnd");
+ box2.style.display = "none";
   var box = document.getElementById("endContainer");
   box.style.display = "block";
+  var box3 = document.getElementById("infoo");
+ box3.style.display = "block";
 };
 
 const closePopup = () => {
@@ -11465,7 +11480,7 @@ const saveUserStatistics = () => {
 };
 
 const showUserStatistics = () => {
-  const resultsElement = document.getElementById("results");
+  const resultsElement = document.getElementById("gameEnd");
   const statisticsString = `BULUNAN KELİME SAYISI ${userStatistics.totalWordsFound}\n`;
 
   resultsElement.textContent = statisticsString;
@@ -11492,7 +11507,7 @@ const showUserStatistics = () => {
   gameDiv.classList.add("pt-5");
   gameDiv.textContent = attemptsTextList.join("\n");
   attemptsPerWordDisplay.appendChild(gameDiv);
-  var box = document.getElementById("infoo");
+  var box = document.getElementById("statss");
   box.style.display = "none";
 
   // Create a reload button
@@ -11504,6 +11519,14 @@ const showUserStatistics = () => {
 
   // Append the reload button to the resultsElement
   resultsElement.appendChild(reloadButton);
+  var box = document.getElementById("endContainer");
+  box.style.display = "block";
+  var box1 = document.getElementById("attemptsPerWordDisplay");
+ box1.style.display = "block";
+ var box2 = document.getElementById("gameEnd");
+ box2.style.display = "block";
+ var box2 = document.getElementById("infoo");
+ box2.style.display = "none";
 
   //
 };

@@ -19,6 +19,8 @@
             <h1>PENTAHARF</h1>
             <h2 id="dark"><a onclick="darkMode()" class="bi bi-moon-stars-fill"></a></h2>
             <h2 id="info"><a onclick="infoPopup()" class="bi bi-info-square-fill"></a></h2>
+            <h2 id="stats"><a onclick="showUserStatistics()" class="bi bi-bar-chart-fill"></a></h2>
+
             <span id="gunlukOn">●</span><button id="dailyWordButton">Günlük Bulmaca</button> #<span id="tamamlanan">s</span> kelime bulundu.
 
 
@@ -34,11 +36,18 @@
         <div class="container" id="endContainer"><i onclick="closePopup()" id="close" class="bi bi-x-circle-fill"></i>
 
             <p id="results">
-            <div id="attemptsPerWordDisplay"></div>
+                <p id="gameEnd">
+                                <div id="attemptsPerWordDisplay"></div>
+                                
+                </p>
 
             </p>
 
             <p id="infoo">
+
+            </p>
+
+            <p id="statss">
 
             </p>
         </div>
