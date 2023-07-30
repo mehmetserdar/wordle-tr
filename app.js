@@ -11162,7 +11162,7 @@ let ipucu = "KELİME:" + "\n" + wordle;
 let shareString = "";
 let info;
 let currentAttempt = 1;
-console.log(wordle);
+//console.log(wordle);
 
 // Check if the user has already played the daily word challenge today
 
