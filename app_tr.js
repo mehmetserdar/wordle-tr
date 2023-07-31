@@ -11174,7 +11174,7 @@ console.log(wordle);
 
 const chooseDailyWord = () => {
   // Check if the user has already played the daily word challenge today
-  const lastPlayedDate = localStorage.getItem("PNTlastPlayedDate");
+  const lastPlayedDate = localStorage.getItem("PNTlastPlayedDateTR");
   //console.log(lastPlayedDate);
 
   //console.log(lastPlayedDate === currentDate);
@@ -11215,7 +11215,7 @@ const completeDailyWord = () => {
 
     // Save the updated isDailyMode to local storage
     // Save the current date as the last played date
-    localStorage.setItem("PNTlastPlayedDate", currentDate);
+    localStorage.setItem("PNTlastPlayedDateTR", currentDate);
     localStorage.setItem("PNTisDailyMode", JSON.stringify(isDailyMode));
     if (!ipucuMu) {
       userStatistics.userCoin += 100; // Award 100 coins for finding the daily word
@@ -11316,7 +11316,7 @@ const deleteLetter = () => {
     tile.setAttribute("data", "");
   }
 };
-lastPlayedDate = localStorage.getItem("PNTlastPlayedDate");
+lastPlayedDate = localStorage.getItem("PNTlastPlayedDateTR");
 
 //console.log(localStorage.getItem("PNTisDailyMode") === true);
 //console.log(localStorage.getItem("PNTisDailyMode"));
