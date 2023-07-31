@@ -9483,10 +9483,11 @@ const completeDailyWord = () => {
       showUserStatistics();
       updateUserCoinDisplay();
       const link = document.createElement("a");
-      link.textContent = "What is " + wordle;
-      link.href = `https://www.google.com/search?q=${encodeURIComponent(
+      link.textContent = "What is " + wordle + "?";
+      link.href = `https://www.google.com/search?q=what+is+${encodeURIComponent(
         wordle
-      )}+nedir`;
+      )}`;
+      link.classList.add("pt-5")
       link.target = "_blank"; // Open the link in a new tab
       var box = document.getElementById("endContainer");
       box.appendChild(link);
@@ -9601,10 +9602,11 @@ const checkRow = () => {
             showUserStatistics();
             updateUserCoinDisplay();
             const link = document.createElement("a");
-            link.textContent = "What is " + wordle;
-            link.href = `https://www.google.com/search?q=${encodeURIComponent(
+            link.textContent = "What is " + wordle + "?";
+            link.href = `https://www.google.com/search?q=what+is+${encodeURIComponent(
               wordle
-            )}+nedir`;
+            )}`;
+            link.classList.add("pt-5")
             link.target = "_blank"; // Open the link in a new tab
             var box = document.getElementById("endContainer");
             box.appendChild(link);

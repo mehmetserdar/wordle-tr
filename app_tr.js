@@ -11232,6 +11232,7 @@ const completeDailyWord = () => {
               wordle
             )}+nedir`;
             link.target = "_blank"; // Open the link in a new tab
+            link.classList.add("pt-5")
             var box = document.getElementById("endContainer");
             box.appendChild(link);
             box.style.display = "block";
@@ -11351,6 +11352,7 @@ const checkRow = () => {
               wordle
             )}+nedir`;
             link.target = "_blank"; // Open the link in a new tab
+            link.classList.add("pt-5")
             var box = document.getElementById("endContainer");
             box.appendChild(link);
             box.style.display = "block";
