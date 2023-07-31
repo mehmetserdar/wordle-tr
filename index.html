@@ -4,27 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>PENTALETTER | ENGLISH WORDLE</title>
-    <script>
-    // JavaScript code in your app.js or other JavaScript file
-const supportedLanguages = ['tr', 'en']; // Add other supported languages here
-
-// Function to check if the user's language is supported
-const isLanguageSupported = (language) => supportedLanguages.includes(language);
-
-// Function to get the language version to redirect to
-const getLanguageVersion = (language) => {
-    // If the user's language is supported, use it, otherwise use the default language ('en' in this case)
-    return isLanguageSupported(language) ? language : 'en';
-};
-
-// Function to change the language and redirect to the appropriate language version of the website
-const changeLanguage = () => {
-    const userLanguage = navigator.language || navigator.userLanguage;
-    const languageVersion = getLanguageVersion(userLanguage);
-    window.location.href = `index_tr.html`;
-};
-
-      </script>
+  
     <link rel="manifest" href="manifest.json">
     <link rel="shortcut icon" href="assets/web/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="style.css" />
@@ -42,7 +22,12 @@ const changeLanguage = () => {
             <h2 id="dark"><a onclick="darkMode()" class="bi bi-moon-stars-fill"></a></h2>
             <h2 id="info"><a onclick="infoPopup()" class="bi bi-info-square-fill"></a></h2>
             <h2 id="stats"><a onclick="showUserStatistics()" class="bi bi-bar-chart-fill"></a></h2>
-            <h2 id="lang"><a onclick="changeLanguage()" class="bi bi-translate"></a></h2>
+            <h2 id="lang"><select id="languageSelect">
+                <option disabled selected>Select Language</option>
+
+                <option value="en">English</option>
+                <option value="tr">Turkish</option>
+              </select></h2>
 
 
             <button id="dailyWordButton">Daily</button>

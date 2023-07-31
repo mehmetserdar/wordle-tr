@@ -11568,3 +11568,23 @@ const showIpucu = () => {
 };
 
 updateUserCoinDisplay();
+
+
+
+        const redirectToSelectedIndex = () => {
+          const languageSelect = document.getElementById('languageSelect');
+          const selectedLanguage = languageSelect.value;
+        console.log(selectedLanguage)
+          // Decide the URL for the selected language
+          let selectedIndexUrl = '';
+          if (selectedLanguage === 'en') {
+            selectedIndexUrl = 'index.html';
+          } else if (selectedLanguage === 'tr') {
+            selectedIndexUrl = 'index_tr.html';
+          }
+        
+          // Redirect to the selected index file
+          window.location.href = selectedIndexUrl;
+        };
+
+        document.getElementById('languageSelect').addEventListener('change', redirectToSelectedIndex);
