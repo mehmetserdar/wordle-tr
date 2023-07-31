@@ -11073,7 +11073,9 @@ let ipucuMu = false;
 const currentDate = new Date().toLocaleDateString();
 
 const tileDisplay = document.querySelector(".tile-container");
-const gunlukOn = document.querySelector("#gunlukOn");
+const gunlukOn = document.querySelector("#dailyWordButton");
+const sinirsizOn = document.querySelector("#wordButton");
+
 const keyboard = document.querySelector(".key-container");
 const messageDisplay = document.querySelector(".message-container");
 const darkDisplay = document.querySelector("#dark");
@@ -11101,13 +11103,13 @@ const fetchDailyNumber = async () => {
 };
 fetchDailyNumber().then(() => {
   dailyWord = dict[dailyNumber];
-  //console.log(dailyWord)
+ // console.log(dailyWord)
 
 });
 let isDailyMode;
 let random_number = Math.floor(Math.random() * dict.length);
 let wordle = dict[random_number];
-console.log(localStorage.getItem("PNTisDailyMode") === null);
+//console.log(localStorage.getItem("PNTisDailyMode") === null);
 if (localStorage.getItem("PNTisDailyMode") === null) {
   isDailyMode = true; // Set isDailyMode to true when the button is clicked
   // Save the updated isDailyMode to local storage
@@ -11162,16 +11164,16 @@ let ipucu = "KELİME:" + "\n" + wordle;
 let shareString = "";
 let info;
 let currentAttempt = 1;
-//console.log(wordle);
+console.log(wordle);
 
 // Check if the user has already played the daily word challenge today
 
 const chooseDailyWord = () => {
   // Check if the user has already played the daily word challenge today
   const lastPlayedDate = localStorage.getItem("PNTlastPlayedDate");
-  console.log(lastPlayedDate);
+  //console.log(lastPlayedDate);
 
-  console.log(lastPlayedDate === currentDate);
+  //console.log(lastPlayedDate === currentDate);
   if (lastPlayedDate === currentDate) {
     showMessage("YENİ BULMACA YARIN!");
     localStorage.setItem("PNTisDailyMode", false);
@@ -11181,7 +11183,16 @@ const chooseDailyWord = () => {
   // Choose the daily word and save it to localStorage
   localStorage.setItem("PNTchosenWord", dailyWord);
   wordle = dailyWord;
-  gunlukOn.style.color = "limegreen";
+  gunlukOn.style.backgroundColor = "#00d26a";
+  sinirsizOn.style.backgroundColor = "black";
+};
+
+const chooseWord = () => {
+  
+  wordle = wordle;
+  sinirsizOn.style.backgroundColor = "#00d26a";
+  gunlukOn.style.backgroundColor = "black";
+
 };
 
 const hasPlayedDailyWord = () => {
@@ -11234,10 +11245,9 @@ dailyWordButton.addEventListener("click", () => {
   chooseDailyWord(); // Start the game after setting the isDailyMode
 });
 
-const updateDailyGameCounterDisplay = () => {
-  const tamamlananElement = document.getElementById("tamamlanan");
-  tamamlananElement.textContent = userStatistics.totalWordsFound;
-};
+wordButton.addEventListener("click", () => {
+  chooseWord(); // Start the game after setting the isDailyMode
+});
 
 guessRows.forEach((guessRow, guessRowIndex) => {
   const rowElement = document.createElement("div");
@@ -11303,11 +11313,9 @@ const deleteLetter = () => {
 };
 lastPlayedDate = localStorage.getItem("PNTlastPlayedDate");
 
-console.log(localStorage.getItem("PNTisDailyMode") === true);
-console.log(localStorage.getItem("PNTisDailyMode"));
-console.log(
-  localStorage.getItem("PNTisDailyMode") && lastPlayedDate !== currentDate
-);
+//console.log(localStorage.getItem("PNTisDailyMode") === true);
+//console.log(localStorage.getItem("PNTisDailyMode"));
+//console.log(localStorage.getItem("PNTisDailyMode") && lastPlayedDate !== currentDate);
 const checkRow = () => {
   const guess = guessRows[currentRow].join("");
   if (currentTile > 4) {
@@ -11370,11 +11378,11 @@ const checkRow = () => {
   }
 };
 
-const showMessage = (message) => {
+const showMessage = (message, time=2000) => {
   const messageElement = document.createElement("p");
   messageElement.textContent = message;
   messageDisplay.append(messageElement);
-  setTimeout(() => messageDisplay.removeChild(messageElement), 2000);
+  setTimeout(() => messageDisplay.removeChild(messageElement), time);
 };
 
 const addColorToKey = (keyLetter, color) => {
@@ -11513,6 +11521,7 @@ const showUserStatistics = () => {
   // Create a reload button
   const reloadButton = document.createElement("button");
   reloadButton.textContent = "YENİ OYUN";
+  reloadButton.classList.add("wordButton");
   reloadButton.addEventListener("click", () => {
     location.reload();
   });
@@ -11559,4 +11568,3 @@ const showIpucu = () => {
 };
 
 updateUserCoinDisplay();
-updateDailyGameCounterDisplay();
