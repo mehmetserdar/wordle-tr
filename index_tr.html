@@ -5,25 +5,28 @@
     <meta charset="UTF-8">
     <title>PENTAHARF | TÜRKÇE WORDLE</title>
     <script>
-        const userLanguage = navigator.language || navigator.userLanguage;
-    const supportedLanguages = ['tr']; // Add other supported languages here
+        const supportedLanguages = ['es', 'en']; // Add other supported languages here
 
-    // Function to check if the user's language is supported
-    const isLanguageSupported = (language) => supportedLanguages.includes(language);
+// Function to check if the user's language is supported
+const isLanguageSupported = (language) => supportedLanguages.includes(language);
 
-    // Function to get the language version to redirect to
-    const getLanguageVersion = (language) => {
-      // If the user's language is supported, use it, otherwise use the default language ('en' in this case)
-      return isLanguageSupported(language) ? language : 'en';
-    };
+// Function to get the language version to redirect to
+const getLanguageVersion = (language) => {
+    // If the user's language is supported, use it, otherwise use the default language ('en' in this case)
+    return isLanguageSupported(language) ? language : 'en';
+};
 
-    // Redirect the user to the appropriate language version of the website
+// Function to change the language and redirect to the appropriate language version of the website
+const changeLanguage = () => {
+    const userLanguage = navigator.language || navigator.userLanguage;
     const languageVersion = getLanguageVersion(userLanguage);
-    window.location.href = `index_${languageVersion}.html`;
+    window.location.href = `index_en.html`;
+};
+
       </script>
     <link rel="manifest" href="manifest.json">
     <link rel="shortcut icon" href="assets/web/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style_tr.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
 </head>
@@ -34,9 +37,11 @@
         <div class="title-container">
 
             <h1>PENTAHARF</h1>
+
             <h2 id="dark"><a onclick="darkMode()" class="bi bi-moon-stars-fill"></a></h2>
             <h2 id="info"><a onclick="infoPopup()" class="bi bi-info-square-fill"></a></h2>
             <h2 id="stats"><a onclick="showUserStatistics()" class="bi bi-bar-chart-fill"></a></h2>
+            <h2 id="lang"><a onclick="changeLanguage()" class="bi bi-translate"></a></h2>
 
             <button id="dailyWordButton">Günlük</button>
             <button id="wordButton">Sınırsız</button>
@@ -79,7 +84,7 @@
             <span id="ipucuu"><a onclick="showMessage('200 JETON KULLANARAK KELİMEYİ GÖSTERİR')" class="bi bi-question-circle-fill"></a></span> <span id="ipucu"><a onclick="showIpucu()">_____</a></span>
     </div>
     
-    <script src="app.js"></script>
+    <script src="app_tr.js"></script>
 </body>
 
 </html>

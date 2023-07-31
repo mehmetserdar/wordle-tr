@@ -1,6 +1,6 @@
 {
-    "name": "PENTAHARF | TÜRKÇE WORDLE",
-    "short_name": "PENTAHARF",
+    "name": "PENTALETTER | PLAY WORDLE",
+    "short_name": "PENTALETTER",
     "start_url": "./index.html",
     "display": "standalone",
     "background_color": "#ffffff",
