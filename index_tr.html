@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 
 <head>
     <meta charset="UTF-8">
-    <title>PENTALETTER | ENGLISH WORDLE</title>
+    <title>PENTAHARF | TÜRKÇE WORDLE</title>
     <script>
         const userLanguage = navigator.language || navigator.userLanguage;
     const supportedLanguages = ['tr']; // Add other supported languages here
@@ -23,7 +23,7 @@
       </script>
     <link rel="manifest" href="manifest.json">
     <link rel="shortcut icon" href="assets/web/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="styleEn.css" />
+    <link rel="stylesheet" href="style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
 </head>
@@ -33,13 +33,13 @@
     <div class="game-container">
         <div class="title-container">
 
-            <h1>PENTALETTER</h1>
+            <h1>PENTAHARF</h1>
             <h2 id="dark"><a onclick="darkMode()" class="bi bi-moon-stars-fill"></a></h2>
             <h2 id="info"><a onclick="infoPopup()" class="bi bi-info-square-fill"></a></h2>
             <h2 id="stats"><a onclick="showUserStatistics()" class="bi bi-bar-chart-fill"></a></h2>
 
-            <button id="dailyWordButton">Daily</button>
-            <button id="wordButton">Unlimited</button>
+            <button id="dailyWordButton">Günlük</button>
+            <button id="wordButton">Sınırsız</button>
 
         </div>
         <div class="board-container">
@@ -76,10 +76,10 @@
                 <path
                     d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499L12.136.326zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484L5.562 3zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-13z" />
             </svg></span> <span id="userCoinDisplay">0</span>
-            <span id="ipucuu"><a onclick="showMessage('REVEALING THE WORD WITH 200 COINS')" class="bi bi-question-circle-fill"></a></span> <span id="ipucu"><a onclick="showIpucu()">_____</a></span>
+            <span id="ipucuu"><a onclick="showMessage('200 JETON KULLANARAK KELİMEYİ GÖSTERİR')" class="bi bi-question-circle-fill"></a></span> <span id="ipucu"><a onclick="showIpucu()">_____</a></span>
     </div>
     
-    <script src="appEn.js"></script>
+    <script src="app.js"></script>
 </body>
 
 </html>
