@@ -89,15 +89,33 @@ a{
     height: 48px;
     top: 3.8vh;
     font-size: x-large;
-
 }
 
 #ipucu{
     color: #3a3a3c;
     position: absolute;   
     top: 4.8vh;
-    left: 4.5vh;
+    left: 3.5vh;
+}
 
+#dailyCounterr{
+    color: #3a3a3c;
+    position: absolute;    
+    top: 8.2vh;
+
+}
+
+
+#dailyCounter{
+    
+    position: fixed;
+    top: 10.4vh;
+    left: 4.6vh;
+
+}
+
+#languageSelect{
+    font-size: large;
 }
 
 
@@ -494,6 +512,11 @@ a:hover {
     text-transform: uppercase;
 }
 
+.button-container{
+    text-align: center;
+    width: 500px;
+}
+
 /* Add the necessary styles to position the userCoinContainer */
 .userCoinContainer {
     position: fixed;
@@ -516,7 +539,7 @@ a:hover {
     border-radius: 20px;
     color: #ffffff;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     margin-left: 5px 5px;
     padding: 15px;
@@ -529,7 +552,7 @@ a:hover {
     border-radius: 20px;
     color: #ffffff;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 500;
     margin-left: 5px 5px;
     padding: 15px;

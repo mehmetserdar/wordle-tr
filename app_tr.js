@@ -11075,6 +11075,8 @@ const currentDate = new Date().toLocaleDateString();
 const tileDisplay = document.querySelector(".tile-container");
 const gunlukOn = document.querySelector("#dailyWordButton");
 const sinirsizOn = document.querySelector("#wordButton");
+const dCounter = document.querySelector("#dailyCounter");
+
 
 const keyboard = document.querySelector(".key-container");
 const messageDisplay = document.querySelector(".message-container");
@@ -11094,6 +11096,7 @@ const fetchDailyNumber = async () => {
 
     // Assuming the API response contains the daily number as a property (e.g., data.number)
     dailyNumber = data.number;
+    dailyCounter = data.counter;
     dailyWord = dict[dailyNumber];
     // Now you can add your logic to use the daily number in your game.
     // For example, you can set it as the chosenWord or use it in any other way you want.
@@ -11103,6 +11106,7 @@ const fetchDailyNumber = async () => {
 };
 fetchDailyNumber().then(() => {
   dailyWord = dict[dailyNumber];
+  gunlukOn.innerHTML = "Günlük #"+ dailyCounter;
  // console.log(dailyWord)
 
 });
