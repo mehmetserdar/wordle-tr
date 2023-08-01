@@ -460,7 +460,7 @@ a:hover {
 @media (min-width: 767.98px) { 
     .game-container {
         /*background-color: #161616;*/
-        zoom: 0.9;
+        zoom: 0.8;
         }
  }
 
@@ -468,7 +468,7 @@ a:hover {
 @media (min-width: 991.98px) { 
     .game-container {
         /*background-color: #161616;*/
-        zoom: 0.9;
+        zoom: 0.7;
         }
  }
 
@@ -476,7 +476,7 @@ a:hover {
 @media (min-width: 1199.98px) {
     .game-container {
         /*background-color: #161616;*/
-        zoom: 0.8;
+        zoom: 0.6;
         }
   }
 
