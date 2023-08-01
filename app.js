@@ -9751,7 +9751,7 @@ const saveUserStatistics = () => {
 
 const showUserStatistics = () => {
   const resultsElement = document.getElementById("gameEnd");
-  const statisticsString = `TOTAL WORDS FOUND ${userStatistics.totalWordsFound}\n`;
+  const statisticsString = `TOTAL FOUND WORDS ${userStatistics.totalWordsFound}\n`;
 
   resultsElement.textContent = statisticsString;
   const attemptsPerWordDisplay = document.getElementById(
@@ -9825,7 +9825,7 @@ const showIpucu = () => {
     ipucu.textContent = wordle;
     updateUserCoinDisplay();
   } else {
-    showMessage("NOTE ENOUGH COINS!");
+    showMessage("NOT ENOUGH COINS!");
   }
 };
 
@@ -9843,6 +9843,8 @@ console.log(selectedLanguage)
     selectedIndexUrl = 'index.html';
   } else if (selectedLanguage === 'tr') {
     selectedIndexUrl = 'index_tr.html';
+  } else if (selectedLanguage === 'es') {
+    selectedIndexUrl = 'index_es.html';
   }
 
   // Redirect to the selected index file
