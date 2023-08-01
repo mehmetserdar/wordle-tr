@@ -27,9 +27,9 @@ a{
 }
 
 .pt-5{
-    font-size: 20px;
+    font-size: 24px;
     padding: 5px 35px;
-    padding-top: 200px;
+    padding-top: 5vh;
 
 }
 
@@ -146,7 +146,7 @@ a:hover {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    zoom: 0.7;
+    zoom: 0.6;
 }
 
 .end-game-container {
@@ -171,7 +171,7 @@ a:hover {
 
 .title-container {
     text-align: center;
-    width: 300px;
+    width: 60vh;
 }
 
 .tile-container {
@@ -181,7 +181,7 @@ a:hover {
     padding:10px;
     box-sizing: border-box;
     width: 100%;
-    max-width: 500px;
+    max-width: 100vh;
 }
 
 .board-container {
@@ -191,7 +191,7 @@ a:hover {
     flex-grow: 1;
     overflow: hidden;
     width: 100%;
-    max-width: 500px;
+    max-width: 100vh;
 
   }
   #board {
@@ -208,6 +208,7 @@ a:hover {
     flex-wrap: wrap;
     position: fixed;
     bottom: 5px;
+    zoom: 1.2;
 
 }
 
@@ -268,7 +269,7 @@ a:hover {
 
 .tile-container .tile {
     width: 100%;
-    height: 83px;
+    height: 14.4vh;
     border: 1px solid #b9b9b9;
     border-radius: 10px;
     box-sizing: border-box;
@@ -315,8 +316,8 @@ a:hover {
     display: none;
     width: 75%;
     height: 60%;
-    max-width: 450px;
-    max-height: 450px;
+    max-width: 90vh;
+    max-height: 90vh;
     position: fixed;
     background-color: #ffffff;
     border-radius: 20px;
@@ -336,10 +337,9 @@ a:hover {
 
 
 #infoo {
-    position: absolute;
     padding: 10px 0 10px 0;    
     white-space: pre-wrap;
-    font-size: 18px;
+    font-size: 24px;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -359,8 +359,7 @@ a:hover {
 }
 
 #gameEnd {
-    position: absolute;
-    padding: 40px;    
+    padding: 6vh;    
     white-space: pre-wrap;
     font-size: 24px;
     align-items: center;
