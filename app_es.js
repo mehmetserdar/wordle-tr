@@ -10906,6 +10906,8 @@ console.log(selectedLanguage)
     selectedIndexUrl = 'index.html';
   } else if (selectedLanguage === 'tr') {
     selectedIndexUrl = 'index_tr.html';
+  } else if (selectedLanguage === 'fr') {
+    selectedIndexUrl = 'index_fr.html';
   } else if (selectedLanguage === 'es') {
     selectedIndexUrl = 'index_es.html';
   }
