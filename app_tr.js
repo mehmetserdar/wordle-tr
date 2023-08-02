@@ -11070,13 +11070,16 @@ const checkwords = [
 let dailyWord;
 let dailyNumber;
 let ipucuMu = false;
+let totalPlayTime = 0; // In milliseconds
+let totalGamesPlayed = 0;
+let startTime = null;
+let timerRunning = false;
 const currentDate = new Date().toLocaleDateString();
 
 const tileDisplay = document.querySelector(".tile-container");
 const gunlukOn = document.querySelector("#dailyWordButton");
 const sinirsizOn = document.querySelector("#wordButton");
 const dCounter = document.querySelector("#dailyCounter");
-
 
 const keyboard = document.querySelector(".key-container");
 const messageDisplay = document.querySelector(".message-container");
@@ -11106,9 +11109,8 @@ const fetchDailyNumber = async () => {
 };
 fetchDailyNumber().then(() => {
   dailyWord = dict[dailyNumber];
-  gunlukOn.innerHTML = "Günlük #"+ dailyCounter;
- // console.log(dailyWord)
-
+  gunlukOn.innerHTML = "Günlük #" + dailyCounter;
+  // console.log(dailyWord)
 });
 let isDailyMode;
 let random_number = Math.floor(Math.random() * dict.length);
@@ -11119,6 +11121,29 @@ if (localStorage.getItem("PNTisDailyMode") === null) {
   // Save the updated isDailyMode to local storage
   localStorage.setItem("PNTisDailyMode", JSON.stringify(isDailyMode));
 }
+
+const startTimer = () => {
+  startTime = Date.now();
+};
+
+const stopTimer = () => {
+  if (timerRunning) {
+    const endTime = Date.now();
+    const elapsedTime = endTime - startTime;
+
+    // Calculate the average game play time in seconds
+    totalPlayTime += elapsedTime / 1000; // Convert milliseconds to seconds
+    totalGamesPlayed++;
+    const averagePlayTime = totalPlayTime / totalGamesPlayed;
+
+    // Save the average play time to localStorage
+    localStorage.setItem("averagePlayTime", averagePlayTime);
+
+    // Reset timer variables
+    startTime = null;
+    timerRunning = false;
+  }
+};
 
 const keys = [
   "E",
@@ -11192,11 +11217,9 @@ const chooseDailyWord = () => {
 };
 
 const chooseWord = () => {
-  
   wordle = wordle;
   sinirsizOn.style.backgroundColor = "#00d26a";
   gunlukOn.style.backgroundColor = "black";
-
 };
 
 const hasPlayedDailyWord = () => {
@@ -11223,6 +11246,8 @@ const completeDailyWord = () => {
       userStatistics.totalWordsFound++;
       userStatistics.finalAttemptsPerGame.push(currentAttempt);
       isGameOver = true;
+      // Stop the timer
+      stopTimer();
     }
     setTimeout(() => {
       // Display user statistics
@@ -11231,16 +11256,15 @@ const completeDailyWord = () => {
       showUserStatistics();
       updateUserCoinDisplay();
       const link = document.createElement("a");
-            link.textContent = wordle + " NEDİR? ";
-            link.href = `https://www.google.com/search?q=${encodeURIComponent(
-              wordle
-            )}+nedir`;
-            link.target = "_blank"; // Open the link in a new tab
-            link.classList.add("pt-5")
-            var box = document.getElementById("endContainer");
-            box.appendChild(link);
-            box.style.display = "block";
-      
+      link.textContent = wordle + " NEDİR? ";
+      link.href = `https://www.google.com/search?q=${encodeURIComponent(
+        wordle
+      )}+nedir`;
+      link.target = "_blank"; // Open the link in a new tab
+      link.classList.add("pt-5");
+      var box = document.getElementById("endContainer");
+      box.appendChild(link);
+      box.style.display = "block";
     }, 3000);
     return;
   }
@@ -11292,6 +11316,11 @@ const handleClick = (letter) => {
 };
 
 const addLetter = (letter) => {
+  if (!isGameOver) {
+    if (!timerRunning) {
+      startTimer();
+      timerRunning = true;
+    }}
   if (currentTile < 5 && currentRow < 6) {
     const tile = document.getElementById(
       "guessRow-" + currentRow + "-tile-" + currentTile
@@ -11343,6 +11372,8 @@ const checkRow = () => {
             userStatistics.totalWordsFound++;
             userStatistics.finalAttemptsPerGame.push(currentAttempt);
             isGameOver = true;
+            // Stop the timer
+            stopTimer();
           }
           setTimeout(() => {
             // Display user statistics
@@ -11356,7 +11387,7 @@ const checkRow = () => {
               wordle
             )}+nedir`;
             link.target = "_blank"; // Open the link in a new tab
-            link.classList.add("pt-5")
+            link.classList.add("pt-5");
             var box = document.getElementById("endContainer");
             box.appendChild(link);
             box.style.display = "block";
@@ -11365,6 +11396,8 @@ const checkRow = () => {
         }
       } else {
         if (currentRow >= 5) {
+          // Stop the timer
+          stopTimer();
           isGameOver = true;
           setTimeout(() => {
             // Display user statistics
@@ -11384,9 +11417,10 @@ const checkRow = () => {
   }
 };
 
-const showMessage = (message, time=2000) => {
+const showMessage = (message, time = 2000) => {
   const messageElement = document.createElement("p");
   messageElement.textContent = message;
+  messageElement.style.fontSize = "xx-large";
   messageDisplay.append(messageElement);
   setTimeout(() => messageDisplay.removeChild(messageElement), time);
 };
@@ -11465,14 +11499,14 @@ const infoPopup = () => {
     "\n\u{1F7E9} harf kelimede var ve doğru yerde." +
     "\n\u{1F7E8} harf kelimede var fakat yanlış yerde. " +
     "\n\u{2B1B} harf kelimede yok.";
-    var box1 = document.getElementById("attemptsPerWordDisplay");
- box1.style.display = "none";
- var box2 = document.getElementById("gameEnd");
- box2.style.display = "none";
+  var box1 = document.getElementById("attemptsPerWordDisplay");
+  box1.style.display = "none";
+  var box2 = document.getElementById("gameEnd");
+  box2.style.display = "none";
   var box = document.getElementById("endContainer");
   box.style.display = "block";
   var box3 = document.getElementById("infoo");
- box3.style.display = "block";
+  box3.style.display = "block";
 };
 
 const closePopup = () => {
@@ -11524,6 +11558,14 @@ const showUserStatistics = () => {
   var box = document.getElementById("statss");
   box.style.display = "none";
 
+  // Calculate the average play time in seconds
+  const averagePlayTime = localStorage.getItem('averagePlayTime');
+  if (averagePlayTime !== null) {
+    const averagePlayTimeInSeconds = Math.round(parseFloat(averagePlayTime));
+    const averagePlayTimeDisplay = document.getElementById('averagePlayTimeDisplay');
+    averagePlayTimeDisplay.textContent = `Oyun Süresi: ${averagePlayTimeInSeconds} saniye.`;
+  }
+
   // Create a reload button
   const reloadButton = document.createElement("button");
   reloadButton.textContent = "YENİ OYUN";
@@ -11537,11 +11579,11 @@ const showUserStatistics = () => {
   var box = document.getElementById("endContainer");
   box.style.display = "block";
   var box1 = document.getElementById("attemptsPerWordDisplay");
- box1.style.display = "block";
- var box2 = document.getElementById("gameEnd");
- box2.style.display = "block";
- var box2 = document.getElementById("infoo");
- box2.style.display = "none";
+  box1.style.display = "block";
+  var box2 = document.getElementById("gameEnd");
+  box2.style.display = "block";
+  var box2 = document.getElementById("infoo");
+  box2.style.display = "none";
 
   //
 };
@@ -11575,26 +11617,50 @@ const showIpucu = () => {
 
 updateUserCoinDisplay();
 
+const redirectToSelectedIndex = () => {
+  const languageSelect = document.getElementById("languageSelect");
+  const selectedLanguage = languageSelect.value;
+  console.log(selectedLanguage);
+  // Decide the URL for the selected language
+  let selectedIndexUrl = "";
+  if (selectedLanguage === "en") {
+    selectedIndexUrl = "index.html";
+  } else if (selectedLanguage === "tr") {
+    selectedIndexUrl = "index_tr.html";
+  } else if (selectedLanguage === "ru") {
+    selectedIndexUrl = "index_ru.html";
+  } else if (selectedLanguage === "fr") {
+    selectedIndexUrl = "index_fr.html";
+  } else if (selectedLanguage === "es") {
+    selectedIndexUrl = "index_es.html";
+  }
 
+  // Redirect to the selected index file
+  window.location.href = selectedIndexUrl;
+};
 
-        const redirectToSelectedIndex = () => {
-          const languageSelect = document.getElementById('languageSelect');
-          const selectedLanguage = languageSelect.value;
-        console.log(selectedLanguage)
-          // Decide the URL for the selected language
-          let selectedIndexUrl = '';
-          if (selectedLanguage === 'en') {
-            selectedIndexUrl = 'index.html';
-          } else if (selectedLanguage === 'tr') {
-            selectedIndexUrl = 'index_tr.html';
-          } else if (selectedLanguage === 'fr') {
-            selectedIndexUrl = 'index_fr.html';
-          } else if (selectedLanguage === 'es') {
-            selectedIndexUrl = 'index_es.html';
-          }
-        
-          // Redirect to the selected index file
-          window.location.href = selectedIndexUrl;
-        };
+document
+  .getElementById("languageSelect")
+  .addEventListener("change", redirectToSelectedIndex);
 
-        document.getElementById('languageSelect').addEventListener('change', redirectToSelectedIndex);
+const loadAveragePlayTime = () => {
+  const averagePlayTime = localStorage.getItem("averagePlayTime");
+  if (averagePlayTime !== null) {
+    totalPlayTime = parseFloat(averagePlayTime) * totalGamesPlayed;
+  }
+};
+
+const updateAveragePlayTimeDisplay = () => {
+  const averagePlayTime = localStorage.getItem("averagePlayTime");
+  if (averagePlayTime !== null) {
+    const averagePlayTimeInSeconds = Math.round(parseFloat(averagePlayTime));
+    const averagePlayTimeDisplay = document.getElementById(
+      "averagePlayTimeDisplay"
+    );
+    averagePlayTimeDisplay.textContent = `Oyun Süresi: ${averagePlayTimeInSeconds} saniye`;
+  }
+};
+
+window.addEventListener("DOMContentLoaded", () => {
+  updateAveragePlayTimeDisplay();
+});

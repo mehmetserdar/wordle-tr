@@ -10394,6 +10394,10 @@ const checkwords = [
 let dailyWord;
 let dailyNumber;
 let ipucuMu = false;
+let totalPlayTime = 0; // In milliseconds
+let totalGamesPlayed = 0;
+let startTime = null;
+let timerRunning = false;
 const currentDate = new Date().toLocaleDateString();
 
 const tileDisplay = document.querySelector(".tile-container");
@@ -10430,7 +10434,7 @@ const fetchDailyNumber = async () => {
 };
 fetchDailyNumber().then(() => {
   dailyWord = dict[dailyNumber];
-  gunlukOn.innerHTML = "Diario #"+ dailyCounter;
+  gunlukOn.innerHTML = "Diario #" + dailyCounter;
 
   // console.log(dailyWord)
 });
@@ -10444,35 +10448,58 @@ if (localStorage.getItem("PNTisDailyMode") === null) {
   localStorage.setItem("PNTisDailyMode", JSON.stringify(isDailyMode));
 }
 
+const startTimer = () => {
+  startTime = Date.now();
+};
+
+const stopTimer = () => {
+  if (timerRunning) {
+    const endTime = Date.now();
+    const elapsedTime = endTime - startTime;
+
+    // Calculate the average game play time in seconds
+    totalPlayTime += elapsedTime / 1000; // Convert milliseconds to seconds
+    totalGamesPlayed++;
+    const averagePlayTime = totalPlayTime / totalGamesPlayed;
+
+    // Save the average play time to localStorage
+    localStorage.setItem("averagePlayTime", averagePlayTime);
+
+    // Reset timer variables
+    startTime = null;
+    timerRunning = false;
+  }
+};
+
 const keys = [
-  'Q',
-    'W',
-    'E',
-    'R',
-    'T',
-    'Y',
-    'U',
-    'I',
-    'O',
-    'P',
-    'A',
-    'S',
-    'D',
-    'F',
-    'G',
-    'H',
-    'J',
-    'K',
-    'L',
-    'Ñ',
-    'ENTER',
-    'Z',
-    'X',
-    'C',
-    'V',
-    'B',
-    'N',
-    'M',
+  "Q",
+  "W",
+  "E",
+  "R",
+  "T",
+  "Y",
+  "U",
+  "I",
+  "O",
+  "P",
+  "A",
+  "S",
+  "D",
+  "F",
+  "G",
+  "H",
+  "J",
+  "K",
+  "L",
+  "Ñ",
+  "ENTER",
+  "Z",
+  "X",
+  "C",
+  "V",
+  "B",
+  "N",
+  "M",
   "\u{232B}",
 ];
 const guessRows = [
@@ -10543,6 +10570,8 @@ const completeDailyWord = () => {
       userStatistics.totalWordsFound++;
       userStatistics.finalAttemptsPerGame.push(currentAttempt);
       isGameOver = true;
+      // Stop the timer
+      stopTimer();
     }
     setTimeout(() => {
       // Display user statistics
@@ -10555,7 +10584,7 @@ const completeDailyWord = () => {
       link.href = `https://www.google.com/search?q=que+es+${encodeURIComponent(
         wordle
       )}`;
-      link.classList.add("pt-5")
+      link.classList.add("pt-5");
       link.target = "_blank"; // Open the link in a new tab
       var box = document.getElementById("endContainer");
       box.appendChild(link);
@@ -10611,6 +10640,11 @@ const handleClick = (letter) => {
 };
 
 const addLetter = (letter) => {
+  if (!isGameOver) {
+    if (!timerRunning) {
+      startTimer();
+      timerRunning = true;
+    }}
   if (currentTile < 5 && currentRow < 6) {
     const tile = document.getElementById(
       "guessRow-" + currentRow + "-tile-" + currentTile
@@ -10662,6 +10696,8 @@ const checkRow = () => {
             userStatistics.totalWordsFound++;
             userStatistics.finalAttemptsPerGame.push(currentAttempt);
             isGameOver = true;
+            // Stop the timer
+            stopTimer();
           }
           setTimeout(() => {
             // Display user statistics
@@ -10674,7 +10710,7 @@ const checkRow = () => {
             link.href = `https://www.google.com/search?q=que+es+${encodeURIComponent(
               wordle
             )}`;
-            link.classList.add("pt-5")
+            link.classList.add("pt-5");
             link.target = "_blank"; // Open the link in a new tab
             var box = document.getElementById("endContainer");
             box.appendChild(link);
@@ -10684,6 +10720,8 @@ const checkRow = () => {
         }
       } else {
         if (currentRow >= 5) {
+          // Stop the timer
+          stopTimer();
           isGameOver = true;
           setTimeout(() => {
             // Display user statistics
@@ -10706,6 +10744,7 @@ const checkRow = () => {
 const showMessage = (message, time = 2000) => {
   const messageElement = document.createElement("p");
   messageElement.textContent = message;
+  messageElement.style.fontSize = "xx-large";
   messageDisplay.append(messageElement);
   setTimeout(() => messageDisplay.removeChild(messageElement), time);
 };
@@ -10773,17 +10812,17 @@ const darkMode = () => {
 
 const infoPopup = () => {
   document.getElementById("infoo").textContent =
-  "¿CÓMO JUGAR?" +
-   "\n" +
-   "\nEncontrar PENTALETRA en 6 intentos." +
-   "\n" +
-   "\nCada suposición debe ser una palabra de 5 letras. Presione ENTER para enviar." +
-   "\n" +
-   "\nDespués de cada suposición, los colores de las cajas cambiarán según su suposición." +
-   "\n" +
-   "\n\u{1F7E9} letras están en la palabra y en el lugar correcto." +
-   "\n\u{1F7E8} letras están en la palabra pero en el lugar equivocado." +
-   "\n\u{2B1B} letra no existe en word.";
+    "¿CÓMO JUGAR?" +
+    "\n" +
+    "\nEncontrar PENTALETRA en 6 intentos." +
+    "\n" +
+    "\nCada suposición debe ser una palabra de 5 letras. Presione ENTER para enviar." +
+    "\n" +
+    "\nDespués de cada suposición, los colores de las cajas cambiarán según su suposición." +
+    "\n" +
+    "\n\u{1F7E9} letras están en la palabra y en el lugar correcto." +
+    "\n\u{1F7E8} letras están en la palabra pero en el lugar equivocado." +
+    "\n\u{2B1B} letra no existe en word.";
   var box1 = document.getElementById("attemptsPerWordDisplay");
   box1.style.display = "none";
   var box2 = document.getElementById("gameEnd");
@@ -10843,6 +10882,15 @@ const showUserStatistics = () => {
   var box = document.getElementById("statss");
   box.style.display = "none";
 
+  // Calculate the average play time in seconds
+  const averagePlayTime = localStorage.getItem('averagePlayTime');
+  if (averagePlayTime !== null) {
+    const averagePlayTimeInSeconds = Math.round(parseFloat(averagePlayTime));
+    const averagePlayTimeDisplay = document.getElementById('averagePlayTimeDisplay');
+    averagePlayTimeDisplay.textContent = `Tiempo de juego: ${averagePlayTimeInSeconds} segundos.`;
+  }
+
+
   // Create a reload button
   const reloadButton = document.createElement("button");
   reloadButton.textContent = "NUEVO JUEGO";
@@ -10894,26 +10942,44 @@ const showIpucu = () => {
 
 updateUserCoinDisplay();
 
-
-
 const redirectToSelectedIndex = () => {
-  const languageSelect = document.getElementById('languageSelect');
+  const languageSelect = document.getElementById("languageSelect");
   const selectedLanguage = languageSelect.value;
-console.log(selectedLanguage)
+  console.log(selectedLanguage);
   // Decide the URL for the selected language
-  let selectedIndexUrl = '';
-  if (selectedLanguage === 'en') {
-    selectedIndexUrl = 'index.html';
-  } else if (selectedLanguage === 'tr') {
-    selectedIndexUrl = 'index_tr.html';
-  } else if (selectedLanguage === 'fr') {
-    selectedIndexUrl = 'index_fr.html';
-  } else if (selectedLanguage === 'es') {
-    selectedIndexUrl = 'index_es.html';
+  let selectedIndexUrl = "";
+  if (selectedLanguage === "en") {
+    selectedIndexUrl = "index.html";
+  } else if (selectedLanguage === "tr") {
+    selectedIndexUrl = "index_tr.html";
+  } else if (selectedLanguage === "ru") {
+    selectedIndexUrl = "index_ru.html";
+  } else if (selectedLanguage === "fr") {
+    selectedIndexUrl = "index_fr.html";
+  } else if (selectedLanguage === "es") {
+    selectedIndexUrl = "index_es.html";
   }
 
   // Redirect to the selected index file
   window.location.href = selectedIndexUrl;
 };
 
-document.getElementById('languageSelect').addEventListener('change', redirectToSelectedIndex);
+document
+  .getElementById("languageSelect")
+  .addEventListener("change", redirectToSelectedIndex);
+
+
+const updateAveragePlayTimeDisplay = () => {
+  const averagePlayTime = localStorage.getItem("averagePlayTime");
+  if (averagePlayTime !== null) {
+    const averagePlayTimeInSeconds = Math.round(parseFloat(averagePlayTime));
+    const averagePlayTimeDisplay = document.getElementById(
+      "averagePlayTimeDisplay"
+    );
+    averagePlayTimeDisplay.textContent = `Tiempo de juego: ${averagePlayTimeInSeconds} segundos`;
+  }
+};
+
+window.addEventListener("DOMContentLoaded", () => {
+  updateAveragePlayTimeDisplay();
+});

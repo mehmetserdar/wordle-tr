@@ -15966,6 +15966,10 @@ const checkwords = [
 let dailyWord;
 let dailyNumber;
 let ipucuMu = false;
+let totalPlayTime = 0; // In milliseconds
+let totalGamesPlayed = 0;
+let startTime = null;
+let timerRunning = false;
 const currentDate = new Date().toLocaleDateString();
 
 const tileDisplay = document.querySelector(".tile-container");
@@ -16015,6 +16019,30 @@ if (localStorage.getItem("PNTisDailyMode") === null) {
   // Save the updated isDailyMode to local storage
   localStorage.setItem("PNTisDailyMode", JSON.stringify(isDailyMode));
 }
+
+const startTimer = () => {
+  startTime = Date.now();
+};
+
+
+const stopTimer = () => {
+  if (timerRunning) {
+    const endTime = Date.now();
+    const elapsedTime = endTime - startTime;
+
+    // Calculate the average game play time in seconds
+    totalPlayTime += elapsedTime / 1000; // Convert milliseconds to seconds
+    totalGamesPlayed++;
+    const averagePlayTime = totalPlayTime / totalGamesPlayed;
+
+    // Save the average play time to localStorage
+    localStorage.setItem('averagePlayTime', averagePlayTime);
+
+    // Reset timer variables
+    startTime = null;
+    timerRunning = false;
+  }
+};
 
 const keys = [
   'Q',
@@ -16114,6 +16142,8 @@ const completeDailyWord = () => {
       userStatistics.totalWordsFound++;
       userStatistics.finalAttemptsPerGame.push(currentAttempt);
       isGameOver = true;
+      // Stop the timer
+      stopTimer();
     }
     setTimeout(() => {
       // Display user statistics
@@ -16182,6 +16212,11 @@ const handleClick = (letter) => {
 };
 
 const addLetter = (letter) => {
+  if (!isGameOver) {
+    if (!timerRunning) {
+      startTimer();
+      timerRunning = true;
+    }}
   if (currentTile < 5 && currentRow < 6) {
     const tile = document.getElementById(
       "guessRow-" + currentRow + "-tile-" + currentTile
@@ -16233,6 +16268,8 @@ const checkRow = () => {
             userStatistics.totalWordsFound++;
             userStatistics.finalAttemptsPerGame.push(currentAttempt);
             isGameOver = true;
+            // Stop the timer
+            stopTimer();
           }
           setTimeout(() => {
             // Display user statistics
@@ -16256,6 +16293,8 @@ const checkRow = () => {
       } else {
         if (currentRow >= 5) {
           isGameOver = true;
+          // Stop the timer
+          stopTimer();
           setTimeout(() => {
             // Display user statistics
             showUserStatistics();
@@ -16277,6 +16316,7 @@ const checkRow = () => {
 const showMessage = (message, time = 2000) => {
   const messageElement = document.createElement("p");
   messageElement.textContent = message;
+  messageElement.style.fontSize = "xx-large";
   messageDisplay.append(messageElement);
   setTimeout(() => messageDisplay.removeChild(messageElement), time);
 };
@@ -16414,6 +16454,15 @@ const showUserStatistics = () => {
   var box = document.getElementById("statss");
   box.style.display = "none";
 
+  // Calculate the average play time in seconds
+  const averagePlayTime = localStorage.getItem('averagePlayTime');
+  if (averagePlayTime !== null) {
+    const averagePlayTimeInSeconds = Math.round(parseFloat(averagePlayTime));
+    const averagePlayTimeDisplay = document.getElementById('averagePlayTimeDisplay');
+    averagePlayTimeDisplay.textContent = `Temps de jeu: ${averagePlayTimeInSeconds} secondes.`;
+  }
+
+
   // Create a reload button
   const reloadButton = document.createElement("button");
   reloadButton.textContent = "NEW GAME";
@@ -16477,6 +16526,8 @@ console.log(selectedLanguage)
     selectedIndexUrl = 'index.html';
   } else if (selectedLanguage === 'tr') {
     selectedIndexUrl = 'index_tr.html';
+  } else if (selectedLanguage === 'ru') {
+    selectedIndexUrl = 'index_ru.html';
   } else if (selectedLanguage === 'fr') {
     selectedIndexUrl = 'index_fr.html';
   } else if (selectedLanguage === 'es') {
@@ -16488,3 +16539,19 @@ console.log(selectedLanguage)
 };
 
 document.getElementById('languageSelect').addEventListener('change', redirectToSelectedIndex);
+
+
+
+const updateAveragePlayTimeDisplay = () => {
+  const averagePlayTime = localStorage.getItem('averagePlayTime');
+  if (averagePlayTime !== null) {
+    const averagePlayTimeInSeconds = Math.round(parseFloat(averagePlayTime));
+    const averagePlayTimeDisplay = document.getElementById('averagePlayTimeDisplay');
+    averagePlayTimeDisplay.textContent = `Temps de jeu: ${averagePlayTimeInSeconds} secondes`;
+  }
+};
+
+
+window.addEventListener('DOMContentLoaded', () => {
+  updateAveragePlayTimeDisplay();
+});

@@ -195,7 +195,7 @@ a:hover {
     border-radius: 10px;
     box-sizing: border-box;
     color: #fff;
-    font-size: xx-large;
+    font-size: 10vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -235,7 +235,7 @@ a:hover {
     width: 45px;
     height: 84px;
     border-radius: 4px;
-    font-size: larger;
+    font-size: x-large;
     font-weight: 600;
     border: none;
     background-color: #dedede;
@@ -280,6 +280,8 @@ a:hover {
 .key-container button:nth-child(31) 
 {
     width: 68px;
+    font-size: larger;
+
 }
 
 
