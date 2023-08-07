@@ -11628,7 +11628,7 @@ const completeDailyWord = () => {
 
   localStorage.removeItem("PNTchosenWord");
   // Update user statistics (assuming userStatistics is initialized)
-  if (!ipucuMu) {
+  
     isDailyMode = false; // Set isDailyMode to true when the button is clicked
 
     // Save the updated isDailyMode to local storage
@@ -11662,8 +11662,7 @@ const completeDailyWord = () => {
       box.style.display = "block";
     }, 3000);
     return;
-  }
-};
+  };
 
 dailyWordButton.addEventListener("click", () => {
   chooseDailyWord(); // Start the game after setting the isDailyMode
